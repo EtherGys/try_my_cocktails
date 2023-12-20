@@ -27,12 +27,12 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
         >
         <label htmlFor="">
         <span className='font-satoshi font-semibold text-base text-gray-700'>
-        your ai prompt
+        your recipes
         </span>
         <textarea 
-        value={post.prompt} 
+        value={post.recipe} 
         onChange={(e) => setPost({
-            ...post, prompt: e.target.value
+            ...post, recipe: e.target.value
         })} 
         name="" 
         id=""

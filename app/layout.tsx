@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { NavBar } from '../components/NavBar'
-import { Provider } from "../components/Provider";
+import { NavBar } from '@components/NavBar'
+import { Provider } from "@components/Provider";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { theme } from "../theme";
 import '../styles/globals.css'

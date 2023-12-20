@@ -1,6 +1,6 @@
 import { connectToDB } from "@/utils/database";
 import  {NextResponse, NextRequest} from "next/server"
-import Recipe from "../../../models/Recipe";
+import Recipe from "@models/Recipe";
 
 
 export async function GET(req: NextRequest) {

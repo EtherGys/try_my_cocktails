@@ -1,4 +1,3 @@
-import React from 'react'
 import { Schema, model, models } from "mongoose";
 
 
@@ -7,7 +6,7 @@ const RecipeSchema = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'User'    
     },
-        prompt: {
+        recipe: {
             type: String, 
             required: [true, "La recette est obligatoire"],
             // match: []

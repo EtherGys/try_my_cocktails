@@ -10,7 +10,7 @@ export default function CreateRecipe() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [post, setPost] = useState({
-    prompt: '',
+    recipe: '',
     tag: ''
   })
   
@@ -22,7 +22,7 @@ export default function CreateRecipe() {
       const response = await fetch('api/recipe/new', {
         method: 'POST',
         body: JSON.stringify({   
-          prompt: post.prompt,
+          recipe: post.recipe,
           userEmail: session?.user?.email,
           tag: post.tag
         })

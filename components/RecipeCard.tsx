@@ -14,8 +14,8 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
 const [copied, setCopied] = useState<string>('')
 
 const handleCopy = () => {
-    setCopied(post.prompt);
-    navigator.clipboard.writeText(post.prompt);
+    setCopied(post.recipe);
+    navigator.clipboard.writeText(post.recipe);
     setTimeout(() => setCopied(''), 1000)
 }
 
@@ -24,8 +24,7 @@ const handleCopy = () => {
         <div className='flex justify-between items-start gap-5'>
         <div className='flex-1 flex justify-start items-center gap-3 cursor-pointer'>
         <Image
-        src=''
-        // src={post.creator.image}
+        src={post.creator?.image}
         alt='user_image'
         width={40}
         height={40}
@@ -38,7 +37,7 @@ const handleCopy = () => {
         </div>
         <div className='copy_btn' onClick={handleCopy}>
         <Image
-        src={copied === post.prompt 
+        src={copied === post.recipe 
             ? '/assets/icons/check-mark.png'
             : '/assets/icons/paste.png'
         }
@@ -49,7 +48,7 @@ const handleCopy = () => {
         </div>
         </div>
         <p className='my-4 font-satoshi text-sm text-gray-700'>
-            {post.prompt}
+            {post.recipe}
         </p>
         <p className='font-inter text-sm blue_gradient cursor-pointer' onClick={() => handleTagClick && handleTagClick(post.tag)}>
             {post.tag}

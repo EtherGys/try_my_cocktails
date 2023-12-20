@@ -1,11 +1,7 @@
-import NextAuth, {NextAuthOptions} from "next-auth"
+import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { Adapter } from "next-auth/adapters"
-import Providers from "next-auth/providers/credentials"
-import { SessionProvider, SessionProviderProps } from "next-auth/react";
-import { connectToDB } from "../../../../utils/database";
-import User from "../../../../models/User";
+import { connectToDB } from "@/utils/database";
+import User from "@models/User";
 
 
 
@@ -19,22 +15,32 @@ const handler =  NextAuth({
         })
     ],
     callbacks: {
-        async session({session}) {
-            const sessionUser = await User.findOne({email: session.user?.email});
-            // let sessionId = sessionUser._id.toString()
-            // sessionId = session.user?.id;
-            // session.user?.id = sessionUser._id.toString();
-     
+        jwt({ token, account, user }) {
+            if (account) {
+              token.accessToken = account.access_token
+              token.id = user?.id
+            }
+            return token
+          },
+        // async session({session, token}) {
+        //     const sessionUser = await User.findOne({email: session.user?.email});
+        //     session.user?.id = token.id;
             
-            return session;
-        },
+        //     return session;
+        // },
+        session: ({ session, token }) => ({
+            ...session,
+            user: {
+              ...session.user,
+              id: token.sub,
+            },
+          }),
         async signIn({profile}) {
             try {
                 await connectToDB();
                 
                 const userExists = await User.findOne({email: profile?.email});
                 
-                console.log(profile);
                 if (!userExists) {
 
                     await User.create({

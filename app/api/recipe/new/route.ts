@@ -1,13 +1,13 @@
 import { connectToDB } from "@/utils/database";
 import  {NextResponse, NextRequest} from "next/server"
-import Recipe from "../../../../models/Recipe";
-import User from "../../../../models/User";
+import Recipe from "@models/Recipe";
+import User from "@models/User";
 
 
 
 export async function POST(req: NextRequest, res: NextResponse) {
     
-    const {userEmail, prompt, tag} = await req.json();
+    const {userEmail, recipe, tag} = await req.json();
     
     try {
         await connectToDB();
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         
         const newRecipe = new Recipe({
             creator: user._id.toString(),
-            prompt,
+            recipe,
             tag
         })
         
