@@ -6,21 +6,22 @@ const RecipeSchema = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'User'    
     },
-        recipe: {
-            type: String, 
-            required: [true, "La recette est obligatoire"],
-            // match: []
-            // 1:33:00
-        },
-        tag: {
-            type: String,
-            required: [true, "Le tag est obligatoire"],
+    creator_id: {
+        type: String, 
+        required: [true, "L'id Google' est obligatoire"],
+    },
+    recipe: {
+        type: String, 
+        required: [true, "La recette est obligatoire"],
+        // match: []
+        // 1:33:00
+    },
+    tag: {
+        type: String,
+        required: [true, "Le tag est obligatoire"],
+    }
+})
 
-            
-        }
-    })
-    
-    const Recipe = models.Recipe || model("Recipe", RecipeSchema);
-    
-    export default Recipe;
-    
+const Recipe = models.Recipe || model("Recipe", RecipeSchema);
+
+export default Recipe;

@@ -36,7 +36,7 @@ export function NavBar() {
                 <button className='outline_btn' onClick={() => {
                                 signOut();
                             }}>Sign out</button>
-                <Link href='' className='black_bt'>
+                <Link href='/profile' className='black_bt'>
                 <Image src={session?.user.image?.toString() || ''} alt='profile' width={37} height={37}/>
                 </Link>
                 </div>

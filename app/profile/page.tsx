@@ -10,9 +10,7 @@ import React from 'react'
 export default function MyProfile() {
     const {data: session} = useSession();
     const [posts, setPosts] = useState<[]>([]);
-    
-    console.log('profile id', session?.user?.id);
-    console.log('profile SESSION', session);
+    const router = useRouter();
     
     useEffect(() => {
         const fetchPosts = async () => {
@@ -25,16 +23,19 @@ export default function MyProfile() {
     }, [])
     
     
-    const handleEdit = () => {
+    const handleEdit = (post: any) => {
+        // router.push(`/update-recipe?id=${post._id}`)
+        console.log('on onclick');
         
     }
-    const handleDelete = () => {
+
+    const handleDelete = (post: any) => {
         
     }
     
     return (
         <Profile
-        name="My"
+        name="Mon"
         desc="Bienvenu sur votre profil"
         data={posts}
         handleEdit={handleEdit}

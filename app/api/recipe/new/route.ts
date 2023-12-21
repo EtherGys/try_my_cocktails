@@ -7,16 +7,17 @@ import User from "@models/User";
 
 export async function POST(req: NextRequest, res: NextResponse) {
     
-    const {userEmail, recipe, tag} = await req.json();
+    const {userId, recipe, tag} = await req.json();
     
     try {
         await connectToDB();
-        const user = await User.findOne({email: userEmail})
+        const user = await User.findOne({id: userId})
         
         const newRecipe = new Recipe({
             creator: user._id.toString(),
             recipe,
-            tag
+            tag,
+            creator_id: userId
         })
         
         await newRecipe.save();

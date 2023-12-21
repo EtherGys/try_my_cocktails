@@ -15,8 +15,12 @@ username: {
 },
 image: {
     type: String,
-
+    required: [true, "L'image' est obligatoire"],
 },
+id: {
+    type: String,
+    required: [true, "L'id Google est obligatoire"],
+}
 })
 
 const User = models.User || model("User", UserSchema);

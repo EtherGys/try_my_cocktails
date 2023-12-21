@@ -19,11 +19,11 @@ export default function CreateRecipe() {
     setSubmitting(true);
     
     try {
-      const response = await fetch('api/recipe/new', {
+      const response = await fetch('/api/recipe/new', {
         method: 'POST',
         body: JSON.stringify({   
           recipe: post.recipe,
-          userEmail: session?.user?.email,
+          userId: session?.user?.id,
           tag: post.tag
         })
       })

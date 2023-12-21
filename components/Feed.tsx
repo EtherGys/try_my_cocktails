@@ -17,6 +17,8 @@ const RecipeCardList = ({data, handleTagClick}: RecipeCardListProps) => {
             key={post.id}
             post={post}
             handleTagClick={handleTagClick}
+            handleEdit={() => {}}
+            handleDelete={() => {}}
             />
         ))}
         </div>
