@@ -16,6 +16,12 @@ const RecipeSchema = new Schema({
         // match: []
         // 1:33:00
     },
+    title: {
+        type: String, 
+        required: [true, "Le titre est obligatoire"],
+        // match: []
+        // 1:33:00
+    },
     tag: {
         type: String,
         required: [true, "Le tag est obligatoire"],

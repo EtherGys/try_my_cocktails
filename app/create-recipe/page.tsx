@@ -24,7 +24,8 @@ export default function CreateRecipe() {
         body: JSON.stringify({   
           recipe: post.recipe,
           userId: session?.user?.id,
-          tag: post.tag
+          tag: post.tag,
+          title: post.title
         })
       })
 
@@ -41,7 +42,7 @@ export default function CreateRecipe() {
   
   return (
     <Form
-    type="Create"
+    type="Créer"
     post={post}
     setPost={setPost}
     submitting={submitting}

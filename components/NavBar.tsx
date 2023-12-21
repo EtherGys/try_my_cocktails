@@ -21,7 +21,7 @@ export function NavBar() {
     }, [])
     
     return (
-        <nav className='flex-between w-full mb-16 pt-3'>
+        <nav className='mx-4 flex-between mb-16 pt-3'>
         <Link href='/' className='flex gap-2 flex-center'>
         <Image className='object-contain' src='/assets/icons/martini.png' alt='logo' width={30} height={30}/>
         {/* remove for sm devices */}
@@ -32,10 +32,10 @@ export function NavBar() {
         {
             session?.user ? (
                 <div className='flex gap-3 md:gap-5'>
-                <Link href='/create-recipe' className='black_btn'>Create recipe</Link>
+                <Link href='/create-recipe' className='black_btn'>Ajouter un cocktail</Link>
                 <button className='outline_btn' onClick={() => {
                                 signOut();
-                            }}>Sign out</button>
+                            }}>Déconnexion</button>
                 <Link href='/profile' className='black_bt'>
                 <Image src={session?.user.image?.toString() || ''} alt='profile' width={37} height={37}/>
                 </Link>
@@ -45,7 +45,7 @@ export function NavBar() {
                 {providers && 
                     Object.values(providers).map((provider) => (
                         <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
-                        Sign In
+                        Connexion
                         </button>
                         ))}
                         </>
@@ -61,16 +61,16 @@ export function NavBar() {
                         {toggleDropdown && (
                             <div className='dropdown'>
                             <Link href='/profile' className='dropdown_link' onClick={() => {setToggleDropdown(false)}}>
-                            My profile
+                            Profil
                             </Link>
                             <Link href='/create-recipe' className='dropdown_link' onClick={() => {setToggleDropdown(false)}}>
-                            Create recipe
+                            Ajouter un cocktail
                             </Link>
                             <button type='button' onClick={() => {
                                 setToggleDropdown(false);
                                 signOut();
                             }} className='mt-5 w-full black_btn'>
-                            Sign out
+                            Déconnexion
                             </button>
                             </div>
                             )}
@@ -81,7 +81,7 @@ export function NavBar() {
                                 {providers && 
                                     Object.values(providers).map((provider) => (
                                         <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
-                                        Sign In
+                                        Connexion
                                         </button>
                                         ))}</>
                                         )

@@ -7,7 +7,7 @@ import User from "@models/User";
 
 export async function POST(req: NextRequest, res: NextResponse) {
     
-    const {userId, recipe, tag} = await req.json();
+    const {userId, recipe, tag, title} = await req.json();
     
     try {
         await connectToDB();
@@ -17,6 +17,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             creator: user._id.toString(),
             recipe,
             tag,
+            title,
             creator_id: userId
         })
         

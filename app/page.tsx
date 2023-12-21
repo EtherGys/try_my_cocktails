@@ -3,12 +3,11 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="mx-10 min-h-screen">
     <div className="">
-    Website to try & share new cocktails recipes !
+    Plateforme pour partager et échanger vos cocktails préférés !
     <section>
-    section
-    <h1>Title H1</h1>
+    <h1 className='text-center font-bold'>Tous nos cocktails sont près pour vous</h1>
     <Feed/>
     
     </section>
