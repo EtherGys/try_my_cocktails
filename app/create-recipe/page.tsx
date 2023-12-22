@@ -13,12 +13,14 @@ export default function CreateRecipe() {
     recipe: '',
     tag: '',
     title: '',
-    ingredients: Array(),
+    ingredients: Array()
   })
   
-
+  
   const ingredientsValues: string[] = [];
-
+  let tags: string[] = [];
+  const char = ',';
+  
   const createPost = async (e: any) => {
     e.preventDefault();
     setSubmitting(true);
@@ -26,13 +28,23 @@ export default function CreateRecipe() {
       ingredientsValues.push(element.value);
     });
     
+    if (post.tag.includes(char)) {
+      const tagsArray: string[] = post.tag.split(char)
+      tags = tagsArray.map((str) => {
+        str.trim()        
+      });
+    } else {
+      tags.push(post.tag);
+    }
+    
+    
     try {
       const response = await fetch('/api/recipe/new', {
         method: 'POST',
         body: JSON.stringify({   
           recipe: post.recipe,
           userId: session?.user?.id,
-          tag: post.tag,
+          tag: tags,
           title: post.title,
           ingredients: ingredientsValues
         })

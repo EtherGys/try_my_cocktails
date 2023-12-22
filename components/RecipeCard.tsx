@@ -46,13 +46,13 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
         <table className="mt-4 table-fixed font-satoshi border border-slate-300 w-full">
         <thead>
         <tr>
-        <th className='pl-4 text-left'>Ingrédients</th>
+        <th className='pl-4 text-left py-1'>Ingrédients</th>
         </tr>
         </thead>
         <tbody>
         {post.ingredients.map((ingredient: any) => (
             <tr>
-            <td className='pl-8 border border-slate-300'>{ingredient}</td>
+            <td className='pl-8 py-2 border border-slate-300'>{ingredient}</td>
             </tr>
             ))}
         </tbody>

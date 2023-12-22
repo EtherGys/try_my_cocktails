@@ -29,7 +29,7 @@ const RecipeSchema = new Schema({
         // 1:33:00
     },
     tag: {
-        type: String,
+        type: [],
         required: [true, "Le tag est obligatoire"],
     }
 })
