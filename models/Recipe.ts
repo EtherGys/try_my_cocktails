@@ -31,6 +31,9 @@ const RecipeSchema = new Schema({
     tag: {
         type: [],
         required: [true, "Le tag est obligatoire"],
+    },
+    cover_image: {
+        type: Object,
     }
 })
 

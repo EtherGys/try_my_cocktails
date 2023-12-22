@@ -13,7 +13,8 @@ export default function CreateRecipe() {
     recipe: '',
     tag: '',
     title: '',
-    ingredients: Array()
+    ingredients: Array(),
+    cover_image: Object()
   })
   
   
@@ -46,7 +47,8 @@ export default function CreateRecipe() {
           userId: session?.user?.id,
           tag: tags,
           title: post.title,
-          ingredients: ingredientsValues
+          ingredients: ingredientsValues,
+          cover_image: post.cover_image
         })
       })
       

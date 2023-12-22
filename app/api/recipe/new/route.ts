@@ -1,4 +1,4 @@
-import { connectToDB } from "@/utils/database";
+import { connectToDB, fileExists } from "@/utils/database";
 import  {NextResponse, NextRequest} from "next/server"
 import Recipe from "@models/Recipe";
 import User from "@models/User";
@@ -7,9 +7,34 @@ import User from "@models/User";
 
 export async function POST(req: NextRequest, res: NextResponse) {
     
-    const {userId, recipe, tag, title, ingredients} = await req.json();
+    const {userId, recipe, tag, title, ingredients, cover_image} = await req.json();
     
+    const isFile = typeof cover_image == "object";
     try {
+        if (isFile) {
+            const blob = cover_image as Blob;
+            const filename = blob.name;
+            
+            const existing = await fileExists(filename);
+            if (existing) {
+                // If file already exists, let's skip it.
+                // If you want a different behavior such as override, modify this part.
+                continue;
+            }
+            const buffer = Buffer.from(await blob.arrayBuffer());
+            const stream = Readable.from(buffer);
+            
+            const uploadStream = bucket.openUploadStream(filename, {
+                // make sure to add content type so that it will be easier to set later.
+                contentType: blob.type,
+                metadata: {}, //add your metadata here if any
+            });
+            await stream.pipe(uploadStream);
+        }
+        
+        
+        
+        
         await connectToDB();
         const user = await User.findOne({id: userId})
         
@@ -19,7 +44,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
             tag,
             title,
             creator_id: userId,
-            ingredients
+            ingredients,
+            cover_image
         })
         
         await newRecipe.save();

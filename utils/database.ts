@@ -1,8 +1,17 @@
 import mongoose from 'mongoose';
+import { MongoClient, GridFSBucket } from "mongodb";
+declare global {
+  var client: MongoClient | null;
+  var bucket: GridFSBucket | null;
+}
 
 let isConnected = false;
 
 export const connectToDB = async () => {
+    const bucket = (global.bucket = new GridFSBucket(client.db(), {
+        bucketName: "images",
+      }));
+
     mongoose.set('strictQuery', true);
     if (isConnected) {
         console.log("mongodb is already connected");
@@ -21,3 +30,13 @@ export const connectToDB = async () => {
         
     }
 }
+
+export async function fileExists(filename: string): Promise<boolean> {
+    const { client } = await connectToDB();
+    const count = await client
+      .db()
+      .collection("images.files")
+      .countDocuments({ filename });
+  
+    return !!count;
+  }

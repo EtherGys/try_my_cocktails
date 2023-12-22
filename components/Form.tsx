@@ -160,7 +160,9 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
             <div className="mt-4 flex text-sm leading-6 text-gray-600">
             <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
             <span>Sélectionner un fichier</span>
-            <input id="file-upload" name="file-upload" type="file" className="sr-only"/>
+            <input id="file-upload" name="file-upload" type="file" onChange={(e) => setPost({
+                ...post, cover_image: e.target.files?.[0]
+            })}  className="sr-only"/>
             </label>
             <p className="pl-1">ou glisser-déposer</p>
             </div>
