@@ -24,28 +24,25 @@ export default function MyProfile() {
     
     
     const handleEdit = (post: any) => {
-        // router.push(`/update-recipe?id=${post._id}`)
-        console.log('on onclick handle Edit');
+        router.push(`/update-recipe?id=${post._id}`)
         
     }
 
     const handleDelete = async (post: any) => {
-        // const hasConfirmed = confirm("Êtes-vous sûr de vouloir supprimer ?")
+        const hasConfirmed = confirm("Êtes-vous sûr de vouloir supprimer ?")
 
-        // if (hasConfirmed) {
-        //     try {
-        //         await fetch(`/api/recipe/${post._id.toString()}`, {
-        //             method: 'DELETE',
-        //         });
+        if (hasConfirmed) {
+            try {
+                await fetch(`/api/recipe/${post._id.toString()}`, {
+                    method: 'DELETE',
+                });
 
-        //         router.push(`/profile`)
-        //     } catch (error) {
-        //        console.log(error);
+                router.push(`/`)
+            } catch (error) {
+               console.log(error);
                 
-        //     }
-        // }
-        console.log('on click handle delete');
-        
+            }
+        }        
     }
     
     return (
@@ -53,8 +50,8 @@ export default function MyProfile() {
         name="Mon"
         desc="Bienvenu sur votre profil"
         data={posts}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
+        handleEdit={() => handleEdit}
+        handleDelete={() => handleDelete}
         />
         )
     }
