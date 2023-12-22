@@ -2,6 +2,9 @@
 'use client'
 import { useState, useEffect } from 'react'
 import RecipeCard from './RecipeCard';
+import { useRouter } from "next/navigation";
+import { Router } from 'tabler-icons-react';
+
 
 interface RecipeCardListProps {
     data: any,
@@ -9,7 +12,9 @@ interface RecipeCardListProps {
 }
 
 
-const RecipeCardList = ({data, handleTagClick}: RecipeCardListProps) => {
+const RecipeCardList = ({data, handleTagClick, handleUsernameClick}: RecipeCardListProps) => {
+
+
     return (
         <div className='mt-16 prompt_layout'>
         {data.map((post: any) => (
@@ -17,6 +22,7 @@ const RecipeCardList = ({data, handleTagClick}: RecipeCardListProps) => {
             key={post.id}
             post={post}
             handleTagClick={handleTagClick}
+            handleUsernameClick={handleUsernameClick}
             handleEdit={() => {}}
             handleDelete={() => {}}
             />
@@ -27,6 +33,8 @@ const RecipeCardList = ({data, handleTagClick}: RecipeCardListProps) => {
         
         export default function Feed() {
             const [posts, setPosts] = useState<[]>([]);
+            const router = useRouter();
+
             
             // Search states
             const [searchText, setSearchText] = useState<string>('');
@@ -64,6 +72,19 @@ const RecipeCardList = ({data, handleTagClick}: RecipeCardListProps) => {
                     const result = filterRecipes(tagName);
                     setSearchResults(result);
                 }
+
+                const handleUsernameClick = (email: string) => {
+
+                    // const fetchUser = async () => {
+                    //     const response = await fetch(`/api/profile`);
+                    //     const data = await response.json();
+                        
+                    //     setPosts(data);
+                    // }
+                    // fetchUser();
+            
+                // router.push(`/profile`);
+                }
                 
                 useEffect(() => {
                     const fetchRecipes = async () => {
@@ -95,11 +116,13 @@ const RecipeCardList = ({data, handleTagClick}: RecipeCardListProps) => {
                         <RecipeCardList
                         data={searchResults}
                         handleTagClick={handleTagClick}
+                        handleUsernameClick={handleUsernameClick}
                         />
                         ) : (
                             <RecipeCardList
                             data={posts}
                             handleTagClick={handleTagClick}
+                            handleUsernameClick={handleUsernameClick}
                             />
                             )}
                             </section>

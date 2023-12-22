@@ -1,5 +1,5 @@
 import { connectToDB } from "@/utils/database";
-import  {NextRequest} from "next/server"
+import  {NextResponse, NextRequest} from "next/server"
 import Recipe from "@models/Recipe";
 
 interface UserProps {
