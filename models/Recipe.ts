@@ -10,15 +10,21 @@ const RecipeSchema = new Schema({
         type: String, 
         required: [true, "L'id Google' est obligatoire"],
     },
+    title: {
+        type: String, 
+        required: [true, "Le titre est obligatoire"],
+        // match: []
+        // 1:33:00
+    },
     recipe: {
         type: String, 
         required: [true, "La recette est obligatoire"],
         // match: []
         // 1:33:00
     },
-    title: {
-        type: String, 
-        required: [true, "Le titre est obligatoire"],
+    ingredients: {
+        type: Array, 
+        required: [true, "Les ingrédients sont obligatoires"],
         // match: []
         // 1:33:00
     },

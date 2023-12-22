@@ -11,12 +11,20 @@ export default function CreateRecipe() {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [post, setPost] = useState({
     recipe: '',
-    tag: ''
+    tag: '',
+    title: '',
+    ingredients: Array(),
   })
   
+
+  const ingredientsValues: string[] = [];
+
   const createPost = async (e: any) => {
     e.preventDefault();
     setSubmitting(true);
+    post.ingredients.forEach(element => {
+      ingredientsValues.push(element.value);
+    });
     
     try {
       const response = await fetch('/api/recipe/new', {
@@ -25,10 +33,11 @@ export default function CreateRecipe() {
           recipe: post.recipe,
           userId: session?.user?.id,
           tag: post.tag,
-          title: post.title
+          title: post.title,
+          ingredients: ingredientsValues
         })
       })
-
+      
       if (response.ok) {
         router.push('/')
       }
@@ -39,6 +48,8 @@ export default function CreateRecipe() {
       setSubmitting(false);
     }
   }
+  
+  
   
   return (
     <Form

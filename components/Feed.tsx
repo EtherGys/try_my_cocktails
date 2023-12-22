@@ -52,7 +52,6 @@ const RecipeCardList = ({data, handleTagClick}: RecipeCardListProps) => {
                     setSearchTimeout(() => {
                         setTimeout(() => {
                             const result = filterRecipes(e.target.value);
-                            console.log('result', result);
                             
                             setSearchResults(result);
                         }, 500);
