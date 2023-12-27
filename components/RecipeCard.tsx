@@ -62,9 +62,9 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
             {post.recipe}
             </p>
             <div className='flex'>
-            {post.tag.map((el: string) => (
+            {post.tag.map((el: string, i: number) => (
                 <p className='font-inter mx-2 text-sm blue_gradient cursor-pointer' onClick={() => handleTagClick && handleTagClick(el)}>
-                #{post.tag}            
+                #{post.tag[i]}         
                 </p>
                 ))}
                 </div>

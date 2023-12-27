@@ -24,19 +24,10 @@ export default function CreateRecipe() {
   const createPost = async (e: any) => {
     e.preventDefault();
     setSubmitting(true);
-    post.ingredients.forEach(element => {
-      ingredientsValues.push(element.value);
-    });
+    post.ingredients.forEach(element => ingredientsValues.push(element.value));
     
-    if (post.tag.includes(char)) {
-      const tagsArray: string[] = post.tag.split(char)
-      tags = tagsArray.map((str) => {
-        str.trim()        
-      });
-    } else {
-      tags.push(post.tag);
-    }
-    
+    const tagsArray: string[] = post.tag.split(char)
+    tagsArray.forEach((str, i) => tagsArray[i] = str.trim())
     
     try {
       const response = await fetch('/api/recipe/new', {
@@ -44,7 +35,7 @@ export default function CreateRecipe() {
         body: JSON.stringify({   
           recipe: post.recipe,
           userId: session?.user?.id,
-          tag: tags,
+          tag: tagsArray,
           title: post.title,
           ingredients: ingredientsValues
         })
