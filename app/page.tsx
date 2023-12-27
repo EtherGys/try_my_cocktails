@@ -1,5 +1,7 @@
+'use client'
 import Feed from '@/components/Feed'
-import Image from 'next/image'
+import ScrollToTop from "react-scroll-to-top";
+
 
 export default function Home() {
   return (
@@ -9,9 +11,9 @@ export default function Home() {
     <section>
     <h1 className='text-center font-bold'>Tous nos cocktails sont près pour vous</h1>
     <Feed/>
-    
     </section>
     </div>
+    <ScrollToTop smooth width='40'/>
     </main>
     )
   }
