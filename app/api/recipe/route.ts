@@ -6,7 +6,7 @@ import Recipe from "@models/Recipe";
 export async function GET(req: NextRequest) {
     try {
         await connectToDB();
-        const recipes = await Recipe.find({}).populate('creator');
+        const recipes = await Recipe.find({}).populate('creator').sort({added_date: -1});
 
         return new Response(JSON.stringify(recipes), {status: 200})
     } catch (error) {

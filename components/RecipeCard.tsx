@@ -4,24 +4,19 @@ import Image from 'next/image'
 import {useSession} from 'next-auth/react'
 import {usePathname, useRouter } from 'next/navigation'
 
-interface RecipeCardProps {
-    post: any,
-    handleTagClick: any,
-    handleEdit: any,
-    handleDelete: any,
-    handleUsernameClick: any
-}
+
 export default function RecipeCard({post, handleTagClick, handleEdit, handleDelete, handleUsernameClick}: RecipeCardProps) {
     const [copied, setCopied] = useState<string>('')
     const { data: session } = useSession();
     const pathName = usePathname();
-    const router = useRouter();
     
     const handleCopy = () => {
         setCopied(post.recipe);
         navigator.clipboard.writeText(post.recipe);
         setTimeout(() => setCopied(''), 1000)
     }
+    
+    const createdDate = new Date(post.added_date).toLocaleString();
     
     return (
         <div className='prompt_card'>
@@ -68,7 +63,7 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
                 </p>
                 ))}
                 </div>
-                <div onClick={() => handleUsernameClick && handleUsernameClick(post.email)} className='flex-1 flex justify-start items-center gap-3 cursor-pointer'>
+                <div onClick={() => handleUsernameClick && handleUsernameClick(post.creator?.email)} className='flex-1 flex justify-start items-center gap-3 cursor-pointer'>
                 <Image
                 src={post.creator?.image}
                 alt='user_image'
@@ -79,6 +74,9 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
                 <div className='flex flex-col'>
                 <h3 className='mt-10 font-satoshi font-semibold text-gray-900'>{post.creator?.username}</h3>
                 </div>
+                </div>
+                <div className='font-sm text-right text-gray-400'>
+                {createdDate}
                 </div>
                 {session?.user?.id === post.creator_id && pathName === '/profile' && (
                     <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>

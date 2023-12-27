@@ -31,6 +31,9 @@ const RecipeSchema = new Schema({
     tag: {
         type: [],
         required: [true, "Le tag est obligatoire"],
+    },
+    added_date: {
+        type: Date,
     }
 })
 

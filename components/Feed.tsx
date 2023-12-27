@@ -9,6 +9,7 @@ import { Router } from 'tabler-icons-react';
 interface RecipeCardListProps {
     data: any,
     handleTagClick: any,
+    handleUsernameClick: any
 }
 
 
@@ -44,11 +45,11 @@ const RecipeCardList = ({data, handleTagClick, handleUsernameClick}: RecipeCardL
             const filterRecipes = (searchedText: string) => {
                 const regex = new RegExp(searchedText, 'i');
                 return posts.filter(
-                    (item) =>
+                    (item: any) =>
                     
                     regex.test(item.creator.username) ||
                     regex.test(item.tag) ||
-                    regex.test(item.recipe)
+                    regex.test(item.title)
                     )
                 }
                 
@@ -59,7 +60,7 @@ const RecipeCardList = ({data, handleTagClick, handleUsernameClick}: RecipeCardL
                     
                     setSearchTimeout(() => {
                         setTimeout(() => {
-                            const result = filterRecipes(e.target.value);
+                            const result: any = filterRecipes(e.target.value);
                             
                             setSearchResults(result);
                         }, 500);
@@ -69,7 +70,7 @@ const RecipeCardList = ({data, handleTagClick, handleUsernameClick}: RecipeCardL
                 const handleTagClick = (tagName: string) => {
                     setSearchText(tagName);
                     
-                    const result = filterRecipes(tagName);
+                    const result: any = filterRecipes(tagName);
                     setSearchResults(result);
                 }
 

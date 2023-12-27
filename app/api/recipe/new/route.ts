@@ -8,10 +8,11 @@ import User from "@models/User";
 export async function POST(req: NextRequest, res: NextResponse) {
     
     const {userId, recipe, tag, title, ingredients} = await req.json();
-    
+  
     try {
         await connectToDB();
         const user = await User.findOne({id: userId})
+        const currentDate = new Date();
         
         const newRecipe = new Recipe({
             creator: user._id.toString(),
@@ -19,9 +20,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
             tag,
             title,
             creator_id: userId,
-            ingredients
+            ingredients,
+            added_date: currentDate,
         })
-        
+
         await newRecipe.save();
         
         return new Response(JSON.stringify(newRecipe), {status: 201})

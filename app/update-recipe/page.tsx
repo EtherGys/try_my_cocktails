@@ -56,7 +56,7 @@ export default function EditRecipe() {
     
     return (
         <Form
-        type="Modofier"
+        type="Modifier"
         post={post}
         setPost={setPost}
         submitting={submitting}

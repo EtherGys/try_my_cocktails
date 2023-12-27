@@ -2,13 +2,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-interface formProps {
-    type: any,
-    post: any, 
-    setPost: any, 
-    submitting: any, 
-    handleSubmit: any
-}
+
 
 export default function Form({type, post, setPost, submitting, handleSubmit}: formProps) {
     const inputArr = [
