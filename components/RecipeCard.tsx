@@ -16,7 +16,7 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
         setTimeout(() => setCopied(''), 1000)
     }
     
-    const createdDate = new Date(post.added_date).toLocaleString();
+    const createdDate = new Date(post.added_date).toLocaleDateString();
     
     return (
         <div className='prompt_card'>
@@ -79,7 +79,7 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
                 {createdDate}
                 </div>
                 {session?.user?.id === post.creator_id && pathName === '/profile' && (
-                    <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
+                    <div className='mt-5 flex-center gap-4 border-t border-gray-300 pt-3'>
                     <p
                     className='font-inter text-sm green_gradient cursor-pointer'
                     onClick={() => handleEdit && handleEdit(post)}

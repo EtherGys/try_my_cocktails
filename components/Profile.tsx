@@ -13,14 +13,14 @@ export default function Profile({name, desc, data, handleEdit, handleDelete}: Pr
   return (
     <section className='w-full'>
     <h1 className='head_text text-left'>
-    <span className='blue_gradient'>
+    <span className='pl-6'>
     {name} Profil
     </span>
     </h1>
-    <p className="desc text-left">
+    <p className="desc text-left pl-6">
     {desc}
     </p>
-    <div className='mt-10 prompt_layout'>
+    <div className='mt-10 pl-10 prompt_layout'>
     {data.map((post: any) => (
       <RecipeCard
       key={post.id}
@@ -29,8 +29,7 @@ export default function Profile({name, desc, data, handleEdit, handleDelete}: Pr
       handleDelete={handleDelete && handleDelete(post)}
       />
       ))}
-      </div>
-      
+      </div>      
       </section>
       )
     }

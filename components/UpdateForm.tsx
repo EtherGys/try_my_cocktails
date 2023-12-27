@@ -4,42 +4,8 @@ import { useState } from 'react'
 
 
 
-export default function Form({type, post, setPost, submitting, handleSubmit}: formProps) {
-    const inputArr = [
-        {
-            type: "text",
-            id: 1,
-            value: ""
-        }
-    ];
-    
-    const [arr, setArr] = useState(inputArr);
-    
-    const addInput = () => {
-        setArr((s: any) => {
-            const lastId = s[s.length - 1].id;
-            return [
-                ...s,
-                {
-                    type: "text",
-                    value: ""
-                }
-            ];
-        });
-    };
-    
-    const handleChange = (e: any) => {
-        e.preventDefault();
-        
-        const index = e.target.id;
-        setArr(s => {
-            const newArr = s.slice();
-            newArr[index].value = e.target.value;
-
-            post.ingredients = newArr;
-            return post.ingredients;
-        });
-    };
+export default function UpdateForm({type, post, setPost, submitting, handleSubmit}: formProps) {
+    const ingredientsArray = post.ingredients;
 
     return (
         <section className='w-full max-w-full flex-start flex-col'>
@@ -78,22 +44,22 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
         {/* Ingredients */}
         <div className=''>
         
-        <button className='border border-gray-300 w-12 h-12 rounded-full' onClick={addInput}>+</button>
         <div className='w-[250px]'>
         <span className='font-satoshi font-semibold text-base text-gray-700'>
         Ingrédients
         </span>
-        <span className='font-normal text-sm'> ("15ml de vodka", "5ml de jus de citron")</span>
         
-        {arr.map((item, i) => {
+        {ingredientsArray.map((ingredient: any, i: number) => {
             return (
                 <input
-                onChange={handleChange}
-                value={item.value}
+                onChange={(e) => setPost({
+                    ...post, ingredient: e.target.value
+                })} 
+                value={ingredient}
                 className='form_input border border-gray-300 w-[150px]'
                 
                 id={i.toString()}
-                type={item.type}
+                type={ingredient.type}
                 size={20}
                 />
                 );

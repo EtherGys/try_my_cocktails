@@ -24,7 +24,7 @@ export async function GET(req: NextRequest, {params}: RecipeProps) {
     }
 }
 export async function PATCH(req: NextRequest, {params}: RecipeProps) {
-    const { tag, recipe } = await req.json();
+    const { tag, recipe, title, ingredients } = await req.json();
 
     try {
         await connectToDB();
@@ -33,6 +33,8 @@ export async function PATCH(req: NextRequest, {params}: RecipeProps) {
           
         existingRecipe.recipe = recipe;
         existingRecipe.tag = tag;
+        existingRecipe.title = title;
+        existingRecipe.ingredients = ingredients;
 
         await existingRecipe.save();
 
