@@ -9,7 +9,7 @@ import { Router } from 'tabler-icons-react';
 interface RecipeCardListProps {
     data: any,
     handleTagClick: any,
-    handleUsernameClick: any
+    handleUsernameClick?: any
 }
 
 
@@ -73,19 +73,6 @@ const RecipeCardList = ({data, handleTagClick, handleUsernameClick}: RecipeCardL
                     const result: any = filterRecipes(tagName);
                     setSearchResults(result);
                 }
-
-                const handleUsernameClick = (email: string) => {
-
-                    // const fetchUser = async () => {
-                    //     const response = await fetch(`/api/profile`);
-                    //     const data = await response.json();
-                        
-                    //     setPosts(data);
-                    // }
-                    // fetchUser();
-            
-                // router.push(`/profile`);
-                }
                 
                 useEffect(() => {
                     const fetchRecipes = async () => {
@@ -117,13 +104,11 @@ const RecipeCardList = ({data, handleTagClick, handleUsernameClick}: RecipeCardL
                         <RecipeCardList
                         data={searchResults}
                         handleTagClick={handleTagClick}
-                        handleUsernameClick={handleUsernameClick}
                         />
                         ) : (
                             <RecipeCardList
                             data={posts}
                             handleTagClick={handleTagClick}
-                            handleUsernameClick={handleUsernameClick}
                             />
                             )}
                             </section>

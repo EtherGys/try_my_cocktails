@@ -5,8 +5,8 @@ interface ProfileProps {
   name: any, 
   desc: any, 
   data: any, 
-  handleEdit: any, 
-  handleDelete: any
+  handleEdit?: any, 
+  handleDelete?: any
 }
 
 export default function Profile({name, desc, data, handleEdit, handleDelete}: ProfileProps) {
@@ -14,7 +14,7 @@ export default function Profile({name, desc, data, handleEdit, handleDelete}: Pr
     <section className='w-full'>
     <h1 className='head_text text-left'>
     <span className='pl-6'>
-    {name} Profil
+    {name}
     </span>
     </h1>
     <p className="desc text-left pl-6">

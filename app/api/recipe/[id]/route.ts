@@ -23,6 +23,7 @@ export async function GET(req: NextRequest, {params}: RecipeProps) {
         
     }
 }
+
 export async function PATCH(req: NextRequest, {params}: RecipeProps) {
     const { tag, recipe, title, ingredients } = await req.json();
 

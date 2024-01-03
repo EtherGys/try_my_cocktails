@@ -47,7 +47,7 @@ export default function MyProfile() {
     
     return (
         <Profile
-        name="Mon"
+        name="Mon profil"
         desc="Bienvenue sur votre profil"
         data={posts}
         handleEdit={() => handleEdit}

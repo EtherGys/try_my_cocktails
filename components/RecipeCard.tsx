@@ -5,10 +5,12 @@ import {useSession} from 'next-auth/react'
 import {usePathname, useRouter } from 'next/navigation'
 
 
-export default function RecipeCard({post, handleTagClick, handleEdit, handleDelete, handleUsernameClick}: RecipeCardProps) {
+export default function RecipeCard({post, handleTagClick, handleEdit, handleDelete}: RecipeCardProps) {
     const [copied, setCopied] = useState<string>('')
     const { data: session } = useSession();
     const pathName = usePathname();
+    const router = useRouter();
+
     
     const handleCopy = () => {
         setCopied(post.recipe);
@@ -18,6 +20,13 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
     
     const createdDate = new Date(post.added_date).toLocaleDateString();
     
+const handleUsernameClick = (userId: string) => {
+
+    router.push(`/users?id=${userId}`);
+
+}
+
+
     return (
         <div className='prompt_card'>
         <div className='flex justify-between items-start gap-5'>
@@ -63,7 +72,7 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
                 </p>
                 ))}
                 </div>
-                <div onClick={() => handleUsernameClick && handleUsernameClick(post.creator?.email)} className='flex-1 flex justify-start items-center gap-3 cursor-pointer'>
+                <div onClick={() => handleUsernameClick && handleUsernameClick(post.creator?.id)} className='flex-1 flex justify-start items-center gap-3 cursor-pointer'>
                 <Image
                 src={post.creator?.image}
                 alt='user_image'
