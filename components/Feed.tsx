@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 const RecipeCardList = ({data, handleTagClick, handleUsernameClick}: RecipeCardListProps) => {
     return (
         <div className='mt-16 prompt_layout'>
-        {data.map((post: any) => (
+        {data.map((post: any, i: number) => (
             <RecipeCard
-            key={post.id}
+            key={i}
             post={post}
             handleTagClick={handleTagClick}
             handleUsernameClick={handleUsernameClick}

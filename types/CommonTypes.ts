@@ -23,7 +23,7 @@ interface RecipeCardProps {
     handleTagClick?: any,
     handleEdit?: any,
     handleDelete?: any,
-    handleUsernameClick?: any
+    handleUsernameClick?: any,
 }
 
 interface formProps {

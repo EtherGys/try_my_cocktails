@@ -89,7 +89,7 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
                 onChange={handleChange}
                 value={item.value}
                 className='form_input border border-gray-300 w-[150px]'
-                
+                key={i}
                 id={i.toString()}
                 type={item.type}
                 size={20}

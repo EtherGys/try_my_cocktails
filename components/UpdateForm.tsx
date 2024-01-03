@@ -57,7 +57,7 @@ export default function UpdateForm({type, post, setPost, submitting, handleSubmi
                 })} 
                 value={ingredient}
                 className='form_input border border-gray-300 w-[150px]'
-                
+                key={i}
                 id={i.toString()}
                 type={ingredient.type}
                 size={20}

@@ -55,8 +55,8 @@ const handleUsernameClick = (userId: string) => {
         </tr>
         </thead>
         <tbody>
-        {post.ingredients.map((ingredient: any) => (
-            <tr>
+        {post.ingredients.map((ingredient: any, i: number) => (
+            <tr key={i}>
             <td className='pl-8 py-2 border border-slate-300'>{ingredient}</td>
             </tr>
             ))}
@@ -67,7 +67,7 @@ const handleUsernameClick = (userId: string) => {
             </p>
             <div className='flex'>
             {post.tag.map((el: string, i: number) => (
-                <p className='font-inter mx-2 text-sm blue_gradient cursor-pointer' onClick={() => handleTagClick && handleTagClick(el)}>
+                <p key={i} className='font-inter mx-2 text-sm blue_gradient cursor-pointer' onClick={() => handleTagClick && handleTagClick(el)}>
                 #{post.tag[i]}         
                 </p>
                 ))}
