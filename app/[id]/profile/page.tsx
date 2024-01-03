@@ -25,7 +25,7 @@ export default function UserProfile() {
     return (
         <Profile
         name="Voir le "
-        desc="Bienvenu sur le profil"
+        desc="Bienvenue sur le profil"
         data={posts}
         handleEdit={() => {}}
         handleDelete={() => {}}
