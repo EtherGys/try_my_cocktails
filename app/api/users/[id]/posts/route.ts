@@ -2,11 +2,7 @@ import { connectToDB } from "@/utils/database";
 import  {NextRequest} from "next/server"
 import Recipe from "@models/Recipe";
 
-interface UserProps {
-params: any
-}
-
-export async function GET(req: NextRequest, {params}: UserProps) {
+export async function GET(req: NextRequest, {params}: DBProps) {
     try {
         await connectToDB();
         const recipes = await Recipe.find({

@@ -2,8 +2,6 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-
-
 export default function Form({type, post, setPost, submitting, handleSubmit}: formProps) {
     const inputArr = [
         {

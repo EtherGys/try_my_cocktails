@@ -2,19 +2,17 @@ import { connectToDB } from "@/utils/database";
 import  {NextResponse, NextRequest} from "next/server"
 import User from "@models/User";
 
-interface UserProps {
-params: any
-}
 
-export async function GET(req: NextRequest, {params}: UserProps) {
+
+export async function GET(req: NextRequest, {params}: DBProps) {
     try {
         await connectToDB();
-        const user = await User.find({
+        const user = await User.findOne({
             id: params.id
         }).populate('id');
+
         if (!user) {
             return new Response('User not found', {status: 404})
-            
         }
         
         return new Response(JSON.stringify(user), {status: 200})

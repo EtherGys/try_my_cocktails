@@ -3,14 +3,13 @@ import  {NextResponse, NextRequest} from "next/server"
 import Recipe from "@models/Recipe";
 import { request } from "http";
 
-interface RecipeProps {
-    params: any
-}
 
-export async function GET(req: NextRequest, {params}: RecipeProps) {
+
+export async function GET(req: NextRequest, {params}: DBProps) {
     try {
         await connectToDB();
         const recipe = await Recipe.findById(params.id);
+        
         if (!recipe) {
             return new Response('Recipe not found', {status: 404})
             
@@ -24,7 +23,7 @@ export async function GET(req: NextRequest, {params}: RecipeProps) {
     }
 }
 
-export async function PATCH(req: NextRequest, {params}: RecipeProps) {
+export async function PATCH(req: NextRequest, {params}: DBProps) {
     const { tag, recipe, title, ingredients } = await req.json();
 
     try {
@@ -46,7 +45,7 @@ export async function PATCH(req: NextRequest, {params}: RecipeProps) {
         
     }
 }
-export async function DELETE(req: NextRequest, {params}: RecipeProps) {
+export async function DELETE(req: NextRequest, {params}: DBProps) {
 
     try {
         await connectToDB();

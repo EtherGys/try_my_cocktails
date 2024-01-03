@@ -21,8 +21,8 @@ interface UserProps {
 interface RecipeCardProps {
     post: PostProps,
     handleTagClick?: any,
-    handleEdit: any,
-    handleDelete: any,
+    handleEdit?: any,
+    handleDelete?: any,
     handleUsernameClick?: any
 }
 
@@ -33,3 +33,21 @@ interface formProps {
     submitting: any, 
     handleSubmit: any
 }
+
+interface RecipeCardListProps {
+    data: any,
+    handleTagClick?: any,
+    handleUsernameClick?: any
+}
+
+interface DBProps {
+    params: any
+}
+
+interface ProfileProps {
+    name: string, 
+    desc: any, 
+    data: any, 
+    handleEdit?: any, 
+    handleDelete?: any
+  }

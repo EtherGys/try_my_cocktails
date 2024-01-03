@@ -3,19 +3,8 @@
 import { useState, useEffect } from 'react'
 import RecipeCard from './RecipeCard';
 import { useRouter } from "next/navigation";
-import { Router } from 'tabler-icons-react';
-
-
-interface RecipeCardListProps {
-    data: any,
-    handleTagClick: any,
-    handleUsernameClick?: any
-}
-
 
 const RecipeCardList = ({data, handleTagClick, handleUsernameClick}: RecipeCardListProps) => {
-
-
     return (
         <div className='mt-16 prompt_layout'>
         {data.map((post: any) => (

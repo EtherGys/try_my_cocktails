@@ -9,7 +9,7 @@ import React from 'react'
 export default function MyProfile() {
     const searchParams = useSearchParams();
     const userId = searchParams.get('id');
-    const [user, setUser] = useState<[]>([]);
+    const [user, setUser] = useState<any>({});
     const [posts, setPosts] = useState<[]>([]);
     
     
@@ -35,13 +35,11 @@ export default function MyProfile() {
     
     return (
         <div>
-        {user.map((el: any) => (
             <Profile
-            name={`Profil de ${el.username}`}
+            name={`Profil de ${user.username}`}
             desc="Bienvenue sur ce profil"
             data={posts}
             />
-            ))}
             </div>
             )
         }

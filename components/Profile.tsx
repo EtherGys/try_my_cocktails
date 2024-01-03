@@ -1,14 +1,6 @@
 import RecipeCard from "./RecipeCard"
 
 
-interface ProfileProps {
-  name: any, 
-  desc: any, 
-  data: any, 
-  handleEdit?: any, 
-  handleDelete?: any
-}
-
 export default function Profile({name, desc, data, handleEdit, handleDelete}: ProfileProps) {
   return (
     <section className='w-full'>
