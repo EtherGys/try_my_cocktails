@@ -1,12 +1,43 @@
 "use client"
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 
 
 export default function UpdateForm({type, post, setPost, submitting, handleSubmit}: formProps) {
-    const ingredientsArray = post.ingredients;
+    const [arr, setArr] = useState<string[]>(post.ingredients);
+    
+    useEffect(() => {
+        setArr(post.ingredients);
+    }, [post.ingredients, post.ingredients.length])
+        
+    const addInput = () => {
+        arr.push('');
+        setArr((s: any) => {
+            const lastId = s[s.length - 1].id;
+            return [
+                ...s,
+                {
+                    type: "text",
+                    value: ""
+                }
+            ];
+        });
 
+    };
+    
+    const handleChange = (e: any) => {
+        e.preventDefault();
+        
+        const index = e.target.id;
+        setArr(s => {
+            const newArr = s.slice();
+            newArr[index] = e.target.value;
+            post.ingredients = newArr;
+            return post.ingredients;
+        });
+    };
+    
     return (
         <section className='w-full max-w-full flex-start flex-col'>
         <h1 className='head_text text-left'>
@@ -33,8 +64,8 @@ export default function UpdateForm({type, post, setPost, submitting, handleSubmi
         onChange={(e) => setPost({
             ...post, title: e.target.value
         })} 
-        name="" 
-        id=""
+        name="title_input" 
+        id="title_input"
         placeholder='Bloody Mary, Daiquiri, ...'
         required
         className='form_input border border-gray-300'
@@ -43,95 +74,92 @@ export default function UpdateForm({type, post, setPost, submitting, handleSubmi
         
         {/* Ingredients */}
         <div className=''>
-        
+        <button type='button' className='border border-gray-300 w-12 h-12 rounded-full' onClick={addInput}>+</button>
+
         <div className='w-[250px]'>
         <span className='font-satoshi font-semibold text-base text-gray-700'>
         Ingrédients
         </span>
-        
-        {ingredientsArray.map((ingredient: any, i: number) => {
+        {arr.map((ingredient: any, index: number) => {
             return (
                 <input
-                onChange={(e) => setPost({
-                    ...post, ingredient: e.target.value
-                })} 
+                onChange={handleChange} 
                 value={ingredient}
                 className='form_input border border-gray-300 w-[150px]'
-                key={i}
-                id={i.toString()}
+                key={index}
+                id={index.toString()}
                 type={ingredient.type}
                 size={20}
                 />
-                );
-            })}
-            </div>
-            </div>
+                )})}
+                </div>
+                </div>
+                
+                {/* Recipe */}
+                <label htmlFor="">
+                <span className='font-satoshi font-semibold text-base text-gray-700'>
+                Votre recette
+                </span>
+                <textarea 
+                value={post.recipe} 
+                onChange={(e) => setPost({
+                    ...post, recipe: e.target.value
+                })} 
+                name="" 
+                id=""
+                placeholder='Écrivez les étapes de la recette'
+                required
+                className='form_textarea border border-gray-300'
+                ></textarea>
+                </label>
+                
+                {/* Tag */}
+                <label htmlFor="">
+                <span className='font-satoshi font-semibold text-base text-gray-700'>
+                Tags
+                <span className='font-normal'> (vodka, jus de citron)</span>
+                </span>
+                <input 
+                value={post.tag} 
+                onChange={(e) => setPost({
+                    ...post, tag: e.target.value
+                })} 
+                name="" 
+                id=""
+                placeholder='#Tag'
+                required
+                className='form_input border border-gray-300'
+                ></input>
+                </label>
+                <div className='flex-end mx-3 mb-5 gap-4'>
+                <Link href='/' className='text-gray-500 text-sm'>Annuler</Link>
+                <button type='submit' disabled={submitting} className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'>
+                {submitting ? `${type}...` : type}
+                </button>
+                </div>
+                
+                <div className="col-span-full">
+                <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">Image de couverture</label>
+                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                <div className="text-center">
+                <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clipRule="evenodd" />
+                </svg>
+                <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                <span>Sélectionner un fichier</span>
+                <input id="file-upload" name="file-upload" type="file" className="sr-only"/>
+                </label>
+                <p className="pl-1">ou glisser-déposer</p>
+                </div>
+                <p className="text-xs leading-5 text-gray-600">PNG ou JPG jusqu'à 10MB</p>
+                </div>
+                </div>
+                </div>
+                
+                
+                </form>
+                </section>
+                )
+            }
             
-            {/* Recipe */}
-            <label htmlFor="">
-            <span className='font-satoshi font-semibold text-base text-gray-700'>
-            Votre recette
-            </span>
-            <textarea 
-            value={post.recipe} 
-            onChange={(e) => setPost({
-                ...post, recipe: e.target.value
-            })} 
-            name="" 
-            id=""
-            placeholder='Écrivez les étapes de la recette'
-            required
-            className='form_textarea border border-gray-300'
-            ></textarea>
-            </label>
-            
-            {/* Tag */}
-            <label htmlFor="">
-            <span className='font-satoshi font-semibold text-base text-gray-700'>
-            Tags
-            <span className='font-normal'> (vodka, jus de citron)</span>
-            </span>
-            <input 
-            value={post.tag} 
-            onChange={(e) => setPost({
-                ...post, tag: e.target.value
-            })} 
-            name="" 
-            id=""
-            placeholder='#Tag'
-            required
-            className='form_input border border-gray-300'
-            ></input>
-            </label>
-            <div className='flex-end mx-3 mb-5 gap-4'>
-            <Link href='/' className='text-gray-500 text-sm'>Annuler</Link>
-            <button type='submit' disabled={submitting} className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'>
-            {submitting ? `${type}...` : type}
-            </button>
-            </div>
-            
-            <div className="col-span-full">
-            <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">Image de couverture</label>
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-            <div className="text-center">
-            <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path fillRule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clipRule="evenodd" />
-            </svg>
-            <div className="mt-4 flex text-sm leading-6 text-gray-600">
-            <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-            <span>Sélectionner un fichier</span>
-            <input id="file-upload" name="file-upload" type="file" className="sr-only"/>
-            </label>
-            <p className="pl-1">ou glisser-déposer</p>
-            </div>
-            <p className="text-xs leading-5 text-gray-600">PNG ou JPG jusqu'à 10MB</p>
-            </div>
-            </div>
-            </div>
-            
-            
-            </form>
-            </section>
-            )
-        }
-        

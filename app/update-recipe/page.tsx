@@ -17,10 +17,9 @@ export default function EditRecipe() {
         ingredients: Array()
     })
     const ingredientsValues: string[] = [];
-
+    const char: string = ',';
+    
     useEffect(() => {
-
-
         const getRecipeDetails = async () => {
             const response = await fetch(`/api/recipe/${recipeId}`)
             const data = await response.json();
@@ -29,7 +28,7 @@ export default function EditRecipe() {
                 tag: data.tag,
                 title: data.title,
                 ingredients: data.ingredients
-      
+                
             }) 
             
         }
@@ -39,6 +38,14 @@ export default function EditRecipe() {
     const updatePost = async (e: any) => {
         e.preventDefault();
         setSubmitting(true);
+        //bug seulement quand pas de modification des tags
+        post.ingredients
+        .filter((str: string) => str !== '')
+        .forEach(element => {ingredientsValues.push(element)});
+
+        const stringTag = post.tag.toString()
+        const tagsArray: string[] = stringTag.split(char)
+        tagsArray.forEach((str, i) => tagsArray[i] = str.trim())        
         
         if (!recipeId) return alert('Recipe Id not found');
         
@@ -47,13 +54,11 @@ export default function EditRecipe() {
                 method: 'PATCH',
                 body: JSON.stringify({   
                     recipe: post.recipe,
-                    tag: post.tag,
+                    tag: tagsArray,
                     title: post.title,
                     ingredients: ingredientsValues
-    
                 })
-            })
-            
+            })            
             if (response.ok) {
                 router.push('/profile')
             }
@@ -64,7 +69,6 @@ export default function EditRecipe() {
             setSubmitting(false);
         }
     }
-    console.log('post in page', post);
     
     return (
         <UpdateForm

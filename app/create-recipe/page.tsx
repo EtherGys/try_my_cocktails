@@ -16,10 +16,8 @@ export default function CreateRecipe() {
     ingredients: Array()
   })
   
-  
   const ingredientsValues: string[] = [];
-  let tags: string[] = [];
-  const char = ',';
+  const char: string = ',';
   
   const createPost = async (e: any) => {
     e.preventDefault();

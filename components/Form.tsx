@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 export default function Form({type, post, setPost, submitting, handleSubmit}: formProps) {
+
     const inputArr = [
         {
             type: "text",
@@ -76,7 +77,7 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
         {/* Ingredients */}
         <div className=''>
         
-        <button className='border border-gray-300 w-12 h-12 rounded-full' onClick={addInput}>+</button>
+        <button type='button' className='border border-gray-300 w-12 h-12 rounded-full' onClick={addInput}>+</button>
         <div className='w-[250px]'>
         <span className='font-satoshi font-semibold text-base text-gray-700'>
         Ingrédients
