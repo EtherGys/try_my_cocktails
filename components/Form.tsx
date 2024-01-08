@@ -1,9 +1,20 @@
 "use client"
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 
 export default function Form({type, post, setPost, submitting, handleSubmit}: formProps) {
-
+    const [selectedImage, setSelectedImage] = useState();
+    
+    
+    const imageChange = (e: any) => {
+        setPost({
+            ...post, file: e.target.files[0]
+        })
+        setSelectedImage(e.target.files[0]);
+    };
+    
+    
     const inputArr = [
         {
             type: "text",
@@ -11,7 +22,6 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
             value: ""
         }
     ];
-    
     const [arr, setArr] = useState(inputArr);
     
     const addInput = () => {
@@ -34,12 +44,16 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
         setArr(s => {
             const newArr = s.slice();
             newArr[index].value = e.target.value;
-
+            
             post.ingredients = newArr;
             return post.ingredients;
         });
     };
-
+    
+    const removeSelectedImage = () => {
+        setSelectedImage(undefined);
+    };
+    
     return (
         <section className='w-full max-w-full flex-start flex-col'>
         <h1 className='head_text text-left'>
@@ -136,35 +150,47 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
             className='form_input border border-gray-300'
             ></input>
             </label>
-            <div className='flex-end mx-3 mb-5 gap-4'>
-            <Link href='/' className='text-gray-500 text-sm'>Annuler</Link>
-            <button type='submit' disabled={submitting} className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'>
-            {submitting ? `${type}...` : type}
-            </button>
-            </div>
             
-            <div className="col-span-full">
-            <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">Image de couverture</label>
+            {/* Cover image */}
+            <div className="w-[40%]">
+            <label htmlFor="cover-photo" className="font-satoshi font-semibold text-base text-gray-700">Image de couverture</label>
             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
             <div className="text-center">
-            <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path fillRule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clipRule="evenodd" />
-            </svg>
-            <div className="mt-4 flex text-sm leading-6 text-gray-600">
-            <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-            <span>Sélectionner un fichier</span>
-            <input id="file-upload" name="file-upload" type="file" className="sr-only"/>
-            </label>
-            <p className="pl-1">ou glisser-déposer</p>
-            </div>
-            <p className="text-xs leading-5 text-gray-600">PNG ou JPG jusqu'à 10MB</p>
-            </div>
-            </div>
-            </div>
-            
-            
-            </form>
-            </section>
-            )
-        }
-        
+            {selectedImage ?
+                (
+                    <div className='text-center'>
+                    <div className='flex justify-center'>
+                    <figure className="max-w-lg">
+                    <img className="object-cover h-80 w-96 rounded-lg" src={URL.createObjectURL(selectedImage)} alt="image de couverture de la recette"/>
+                    </figure>
+                    </div>
+                    <button type="button" onClick={removeSelectedImage} className="text-gray-900 mt-4 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Supprimer l'image</button>
+                    </div>
+                    ) : (
+                        <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path fillRule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clipRule="evenodd" />
+                        </svg>
+                        
+                        )}
+                        <div className="mt-4 flex text-sm justify-center leading-6 text-gray-600">
+                        <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                        <span>Sélectionner un fichier</span>
+                        <input id="file-upload" name="file-upload" accept="image/*" type="file" className="sr-only" onChange={imageChange}/>
+                        </label>
+                        <p className="pl-1">ou glisser-déposer</p>
+                        </div>
+                        <p className="text-xs leading-5 text-gray-600">PNG ou JPG jusqu'à 10MB</p>
+                        </div>
+                        </div>
+                        </div> 
+                        <div className='flex-end mx-3 mb-5 gap-4'>
+                        <Link href='/' className='text-gray-500 text-sm'>Annuler</Link>
+                        <button type='submit' disabled={submitting} className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'>
+                        {submitting ? `${type}...` : type}
+                        </button>
+                        </div>
+                        </form>
+                        </section>
+                        )
+                    }
+                    

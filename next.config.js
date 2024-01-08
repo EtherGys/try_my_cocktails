@@ -2,6 +2,7 @@
 const nextConfig = {
     experimental: {
       serverComponentsExternalPackages: ["mongoose"],
+      serverActions: true,
     },
     images: {
       domains: ['lh3.googleusercontent.com'],
