@@ -44,9 +44,10 @@ export default function UpdateForm({type, post, setPost, submitting, handleSubmi
         });
     };
     
-    // async function removeSelectedImage() {
-    //     ;      
-    // };
+    async function removeSelectedImage() {
+        setSelectedImage(undefined);
+        post.file = new File([], "fileName");
+    };
         
     return (
         <section className='w-full max-w-full flex-start flex-col'>
@@ -154,7 +155,7 @@ export default function UpdateForm({type, post, setPost, submitting, handleSubmi
                     <img className="object-cover h-80 w-96 rounded-lg" src={URL.createObjectURL(selectedImage)} alt="image de couverture de la recette"/>
                     </figure>
                     </div>
-                    <button type="button" onClick={() => setSelectedImage(undefined)} className="text-gray-900 mt-4 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Supprimer l'image</button>
+                    <button type="button" onClick={removeSelectedImage} className="text-gray-900 mt-4 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Supprimer l'image</button>
                     </div>
                     ) : (
                         <img className="object-cover h-80 w-96 rounded-lg" src={post.file_url} alt="image de couverture de la recette"/>

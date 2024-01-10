@@ -37,7 +37,7 @@ export default function EditRecipe() {
         }
         if (recipeId) getRecipeDetails();
     }, [recipeId])
-    
+
     const updatePost = async (e: any) => {
         e.preventDefault();
         setSubmitting(true);
@@ -50,39 +50,65 @@ export default function EditRecipe() {
         tagsArray.forEach((str, i) => tagsArray[i] = str.trim())
         
         if (!recipeId) return alert('Recipe Id not found');
+        if (post.file.size != 0) {
+            
+            const formData = new FormData()
+            formData.append('file', post.file);
+            formData.append('upload_preset', 'my-uploads');
+            
+            const data = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+            method: 'POST',
+            body: formData,
+        }).then(res => res.json())
         
-    const formData = new FormData()
-    formData.append('file', post.file);
-    formData.append('upload_preset', 'my-uploads');
-    
-    const data = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
-    method: 'POST',
-    body: formData,
-}).then(res => res.json())
-
-if (data.secure_url) {
-    try {
-        const response = await fetch(`/api/recipe/${recipeId}`, {
-            method: 'PATCH',
-            body: JSON.stringify({
-                recipe: post.recipe,
-                tag: tagsArray,
-                title: post.title,
-                ingredients: ingredientsValues,
-                file_url: data.secure_url,
-                file_public_id: data.public_id.replace("my-uploads/", "")
-            })
-        })
-        if (response.ok) {
-            router.push('/profile')
+        
+        if (data.secure_url) {
+            try {
+                const response = await fetch(`/api/recipe/${recipeId}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        recipe: post.recipe,
+                        tag: tagsArray,
+                        title: post.title,
+                        ingredients: ingredientsValues,
+                        file_url: data.secure_url,
+                        file_public_id: data.public_id.replace("my-uploads/", "")
+                    })
+                })
+                if (response.ok) {
+                    router.push('/profile')
+                }
+            } catch (error) {
+                console.log(error);
+                
+            } finally {
+                setSubmitting(false);
+            }
         }
-    } catch (error) {
-        console.log(error);
-        
-    } finally {
-        setSubmitting(false);
+    } else {
+
+        try {
+            const response = await fetch(`/api/recipe/${recipeId}`, {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    recipe: post.recipe,
+                    tag: tagsArray,
+                    title: post.title,
+                    ingredients: ingredientsValues,
+                    file_url: post.file_url,
+                    file_public_id: post.public_id
+                })
+            })
+            if (response.ok) {
+                router.push('/profile')
+            }
+        } catch (error) {
+            console.log(error);
+            
+        } finally {
+            setSubmitting(false);
+        }
     }
-}
 }
 
 return (
