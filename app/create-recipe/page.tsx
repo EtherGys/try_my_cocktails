@@ -9,6 +9,8 @@ export default function CreateRecipe() {
   const {data: session} = useSession();
   const router = useRouter();
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const ingredientsValues: string[] = [];
+  const char: string = ',';
   const [post, setPost] = useState({
     recipe: '',
     tag: '',
@@ -17,8 +19,6 @@ export default function CreateRecipe() {
     file: new File([], "fileName")
   })
   
-  const ingredientsValues: string[] = [];
-  const char: string = ',';
   
   const createPost = async (e: any) => {
     e.preventDefault();
@@ -27,14 +27,15 @@ export default function CreateRecipe() {
     
     const tagsArray: string[] = post.tag.split(char)
     tagsArray.forEach((str, i) => tagsArray[i] = str.trim())
+    
     const formData = new FormData()
     formData.append('file', post.file);
     formData.append('upload_preset', 'my-uploads');
-    
     const data = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
     method: 'POST',
     body: formData,
   }).then(res => res.json())
+  
   
   if (data.secure_url) {
     try {
@@ -46,7 +47,8 @@ export default function CreateRecipe() {
           tag: tagsArray,
           title: post.title,
           ingredients: ingredientsValues,
-          file_url: data.secure_url
+          file_url: data.secure_url,
+          file_public_id: data.public_id.replace("my-uploads/", "")
         })
       })
       
@@ -72,7 +74,5 @@ return (
   submitting={submitting}
   handleSubmit={createPost}
   />
-  
-  
   )
 }

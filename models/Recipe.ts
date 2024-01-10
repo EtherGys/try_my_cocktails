@@ -27,6 +27,9 @@ const RecipeSchema = new Schema({
     file_url: {
         type: String, 
     },
+    file_public_id: {
+        type: String, 
+    },
     tag: {
         type: [],
         required: [true, "Le tag est obligatoire"],
