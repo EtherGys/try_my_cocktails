@@ -10,7 +10,7 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
     const { data: session } = useSession();
     const pathName = usePathname();
     const router = useRouter();
-
+    
     
     const handleCopy = () => {
         setCopied(post.recipe);
@@ -20,18 +20,12 @@ export default function RecipeCard({post, handleTagClick, handleEdit, handleDele
     
     const createdDate = new Date(post.added_date).toLocaleDateString();
     
-const handleUsernameClick = (userId: string) => {
-
-    router.push(`/users?id=${userId}`);
-
-}
-
-
+    const handleUsernameClick = (userId: string) => router.push(`/users?id=${userId}`);
+    
     return (
         <div className='prompt_card'>
         <div className='flex justify-between items-start gap-5'>
         <div className='flex-1 flex justify-start items-center gap-3'>
-        
         <div className='flex flex-col'>
         <h3 className='font-satoshi font-semibold text-gray-900 text-2xl'>{post.title}</h3>
         </div>
@@ -42,11 +36,14 @@ const handleUsernameClick = (userId: string) => {
             ? '/assets/icons/check-mark.png'
             : '/assets/icons/paste.png'
         }
-        alt=''
+        alt='copied_icon'
         width={12}
         height={12}
         />
         </div>
+        </div>
+        <div>
+        <img className="object-cover h-80 w-96" src={post.file_url} alt="" />
         </div>
         <table className="mt-4 table-fixed font-satoshi border border-slate-300 w-full">
         <thead>

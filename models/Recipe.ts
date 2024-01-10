@@ -19,14 +19,16 @@ const RecipeSchema = new Schema({
     recipe: {
         type: String, 
         required: [true, "La recette est obligatoire"],
-        // match: []
-        // 1:33:00
     },
     ingredients: {
         type: Array, 
         required: [true, "Les ingrédients sont obligatoires"],
-        // match: []
-        // 1:33:00
+    },
+    file_url: {
+        type: String, 
+    },
+    file_public_id: {
+        type: String, 
     },
     tag: {
         type: [],

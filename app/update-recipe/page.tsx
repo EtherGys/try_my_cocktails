@@ -1,6 +1,5 @@
 'use client'
 import React from 'react'
-import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from 'react';
 import UpdateForm from '@/components/UpdateForm';
@@ -14,7 +13,10 @@ export default function EditRecipe() {
         recipe: '',
         tag: '',
         title: '',
-        ingredients: Array()
+        ingredients: Array(),
+        file_url: '',
+        public_id: '',
+        file: new File([], "fileName")
     })
     const ingredientsValues: string[] = [];
     const char: string = ',';
@@ -27,38 +29,76 @@ export default function EditRecipe() {
                 recipe: data.recipe,
                 tag: data.tag,
                 title: data.title,
-                ingredients: data.ingredients
-                
-            }) 
-            
+                ingredients: data.ingredients,
+                file_url: data.file_url,
+                public_id: data.file_public_id,
+                file: new File([], "fileName")
+            })
         }
         if (recipeId) getRecipeDetails();
-    }, [recipeId])    
-    
+    }, [recipeId])
+
     const updatePost = async (e: any) => {
         e.preventDefault();
         setSubmitting(true);
-        //bug seulement quand pas de modification des tags
         post.ingredients
         .filter((str: string) => str !== '')
-        .forEach(element => {ingredientsValues.push(element)});
-
+        .forEach(element => { ingredientsValues.push(element) });
+        
         const stringTag = post.tag.toString()
         const tagsArray: string[] = stringTag.split(char)
-        tagsArray.forEach((str, i) => tagsArray[i] = str.trim())        
+        tagsArray.forEach((str, i) => tagsArray[i] = str.trim())
         
         if (!recipeId) return alert('Recipe Id not found');
+        if (post.file.size != 0) {
+            
+            const formData = new FormData()
+            formData.append('file', post.file);
+            formData.append('upload_preset', 'my-uploads');
+            
+            const data = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+            method: 'POST',
+            body: formData,
+        }).then(res => res.json())
         
+        
+        if (data.secure_url) {
+            try {
+                const response = await fetch(`/api/recipe/${recipeId}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        recipe: post.recipe,
+                        tag: tagsArray,
+                        title: post.title,
+                        ingredients: ingredientsValues,
+                        file_url: data.secure_url,
+                        file_public_id: data.public_id.replace("my-uploads/", "")
+                    })
+                })
+                if (response.ok) {
+                    router.push('/profile')
+                }
+            } catch (error) {
+                console.log(error);
+                
+            } finally {
+                setSubmitting(false);
+            }
+        }
+    } else {
+
         try {
             const response = await fetch(`/api/recipe/${recipeId}`, {
                 method: 'PATCH',
-                body: JSON.stringify({   
+                body: JSON.stringify({
                     recipe: post.recipe,
                     tag: tagsArray,
                     title: post.title,
-                    ingredients: ingredientsValues
+                    ingredients: ingredientsValues,
+                    file_url: post.file_url,
+                    file_public_id: post.public_id
                 })
-            })            
+            })
             if (response.ok) {
                 router.push('/profile')
             }
@@ -69,17 +109,15 @@ export default function EditRecipe() {
             setSubmitting(false);
         }
     }
-    
-    return (
-        <UpdateForm
-        type="Modifier"
-        post={post}
-        setPost={setPost}
-        submitting={submitting}
-        handleSubmit={updatePost}
-        />
-        
-        
-        )
-    }
-    
+}
+
+return (
+    <UpdateForm
+    type="Modifier"
+    post={post}
+    setPost={setPost}
+    submitting={submitting}
+    handleSubmit={updatePost}
+    />
+    )
+}

@@ -1,9 +1,6 @@
 import { connectToDB } from "@/utils/database";
-import  {NextResponse, NextRequest} from "next/server"
+import  { NextRequest } from "next/server"
 import Recipe from "@models/Recipe";
-import { request } from "http";
-
-
 
 export async function GET(req: NextRequest, {params}: DBProps) {
     try {
@@ -12,19 +9,17 @@ export async function GET(req: NextRequest, {params}: DBProps) {
         
         if (!recipe) {
             return new Response('Recipe not found', {status: 404})
-            
         }
         
         return new Response(JSON.stringify(recipe), {status: 200})
     } catch (error) {
         console.log(error);
         return new Response('Failed to fetch all recipes', {status: 500})
-        
     }
 }
 
 export async function PATCH(req: NextRequest, {params}: DBProps) {
-    const { tag, recipe, title, ingredients } = await req.json();
+    const { tag, recipe, title, ingredients, file_url, file_public_id } = await req.json();
 
     try {
         await connectToDB();
@@ -35,6 +30,8 @@ export async function PATCH(req: NextRequest, {params}: DBProps) {
         existingRecipe.tag = tag;
         existingRecipe.title = title;
         existingRecipe.ingredients = ingredients;
+        existingRecipe.file_url = file_url;
+        existingRecipe.file_public_id = file_public_id;
 
         await existingRecipe.save();
 
