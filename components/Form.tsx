@@ -68,6 +68,7 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
         
         <form 
         onSubmit={handleSubmit}
+        noValidate
         className='mt-10 w-full m-w-2xl flex flex-col gap-7 glassmorphism'
         >
         {/* Title */}
@@ -97,7 +98,6 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
         Ingrédients
         </span>
         <span className='font-normal text-sm'> ("15ml de vodka", "5ml de jus de citron")</span>
-        
         {arr.map((item, i) => {
             return (
                 <input
@@ -140,13 +140,13 @@ export default function Form({type, post, setPost, submitting, handleSubmit}: fo
             </span>
             <input 
             value={post.tag} 
+            required
             onChange={(e) => setPost({
                 ...post, tag: e.target.value
             })} 
             name="" 
             id=""
             placeholder='#Tag'
-            required
             className='form_input border border-gray-300'
             ></input>
             </label>

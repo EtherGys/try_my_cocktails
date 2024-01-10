@@ -61,6 +61,7 @@ export default function UpdateForm({type, post, setPost, submitting, handleSubmi
         </p>
         
         <form 
+        noValidate
         onSubmit={handleSubmit}
         className='mt-10 w-full m-w-2xl flex flex-col gap-7 glassmorphism'
         >
