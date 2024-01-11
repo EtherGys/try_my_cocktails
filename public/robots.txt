@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://try-my-cocktails.vercel.app//sitemap.xml

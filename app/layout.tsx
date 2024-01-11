@@ -9,8 +9,8 @@ import '../styles/globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Try My Cocktail",
-  description: "Blog pour partager vos propres recettes de cocktails, ou pour vous donner des idées en fonction de l'alcool que vous avez",
+  title: "Try My Cocktail, plateforme de partage d'idées de cocktails et mocktails",
+  description: "Venez découvrir et partager vos recettes de cocktails, nous avons des idées pour vous",
 }
 
 export default function RootLayout({
