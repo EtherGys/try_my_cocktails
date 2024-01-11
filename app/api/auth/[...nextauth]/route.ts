@@ -15,26 +15,6 @@ const handler =  NextAuth({
         })
     ],
     callbacks: {
-        jwt({ token, account, user }) {
-            if (account) {
-              token.accessToken = account.access_token
-              token.id = user?.id
-            }
-            return token
-          },
-        // async session({session, token}) {
-        //     const sessionUser = await User.findOne({email: session.user?.email});
-        //     session.user?.id = token.id;
-            
-        //     return session;
-        // },
-        session: ({ session, token }) => ({
-            ...session,
-            user: {
-              ...session.user,
-              id: token.sub,
-            },
-          }),
         async signIn({profile}) {
             try {
                 await connectToDB();
@@ -42,11 +22,11 @@ const handler =  NextAuth({
                 const userExists = await User.findOne({email: profile?.email});
                 
                 if (!userExists) {
-
+                    
                     await User.create({
                         email: profile?.email,
                         username: profile?.name,
-                        image: profile?.picture,
+                        image: profile?.image,
                         id: profile?.sub
                     })
                 }
@@ -58,7 +38,22 @@ const handler =  NextAuth({
                 
             }
         },
-    }
+        session: async ({ session, token }) => {
+            if (session?.user) {
+                session.user.id = token.uid;
+            }
+            return session;
+        },
+        jwt: async ({ user, token }) => {
+            if (user) {
+                token.uid = user.id;
+            }
+            return token;
+        },
+    },
+    session: {
+        strategy: 'jwt',
+    },
 })
 
 export { handler as GET, handler as POST }

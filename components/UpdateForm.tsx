@@ -130,7 +130,7 @@ export default function UpdateForm({type, post, setPost, submitting, handleSubmi
                             </span>
                             <textarea 
                             value={post.recipe} 
-                            {...register("recipe", { required: true, minLength: 20, maxLength: 300, onChange:(e: any) => setPost({
+                            {...register("recipe", { required: true, minLength: 20, maxLength: 550, onChange:(e: any) => setPost({
                                 ...post, recipe: e.target.value
                             }) })}
                             name="recipe" 
@@ -139,7 +139,7 @@ export default function UpdateForm({type, post, setPost, submitting, handleSubmi
                             required
                             className='form_textarea border border-gray-300'
                             ></textarea>
-                            {errorHandler(errors.recipe, 20, 300)}
+                            {errorHandler(errors.recipe, 20, 550)}
                             </label>
                             
                             {/* Tag */}

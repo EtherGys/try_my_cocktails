@@ -4,12 +4,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { signIn, signOut, getProviders, useSession, LiteralUnion, ClientSafeProvider} from 'next-auth/react'
 import BuiltInProviderType from "next-auth/providers/google"
+// import { BuiltInProviderType } from "next-auth/providers";
 
 
 export function NavBar() {
     const {data: session} = useSession();
 
-    const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
+    const [providers, setProviders] = useState<any>(null);
     const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
     
     useEffect(() => {
@@ -43,7 +44,7 @@ export function NavBar() {
                 ) : 
                 <>
                 {providers && 
-                    Object.values(providers).map((provider) => (
+                    Object.values(providers).map((provider: any) => (
                         <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
                         Connexion
                         </button>
@@ -79,7 +80,7 @@ export function NavBar() {
                             ) : (
                                 <>
                                 {providers && 
-                                    Object.values(providers).map((provider) => (
+                                    Object.values(providers).map((provider: any) => (
                                         <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
                                         Connexion
                                         </button>

@@ -28,7 +28,7 @@ const RecipeCardList = ({data, handleTagClick, handleUsernameClick}: RecipeCardL
             
             // Search states
             const [searchText, setSearchText] = useState<string>('');
-            const [searchTimeout, setSearchTimeout] = useState<string | number | Timeout | undefined>(null);
+            const [searchTimeout, setSearchTimeout] = useState<any>(null);
             const [searchResults, setSearchResults] = useState<[]>([]);
             
             const filterRecipes = (searchedText: string) => {
