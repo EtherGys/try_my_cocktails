@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import Form from '@/components/Form';
+import { useForm, SubmitHandler } from "react-hook-form";
 
 export default function CreateRecipe() {
   const {data: session} = useSession();
@@ -18,10 +19,15 @@ export default function CreateRecipe() {
     ingredients: Array(),
     file: new File([], "fileName")
   })
+  const { register, 
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PostProps>();
   
   
-  const createPost = async (e: any) => {
-    e.preventDefault();
+  
+  async function createPost() {
+    // e.preventDefault();
     setSubmitting(true);
     post.ingredients.forEach(element => ingredientsValues.push(element.value));
     
@@ -64,15 +70,20 @@ export default function CreateRecipe() {
   }
 }
 
-
+const onSubmit: SubmitHandler<PostProps> = () => createPost();
 
 return (
+  <div>
   <Form
   type="Créer"
   post={post}
+  errors={errors}
+  register={register}
   setPost={setPost}
   submitting={submitting}
-  handleSubmit={createPost}
+  handleSubmit={handleSubmit(onSubmit)}
   />
+  
+  </div>
   )
 }

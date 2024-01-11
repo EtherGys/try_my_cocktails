@@ -32,7 +32,9 @@ interface formProps {
     post: any, 
     setPost: any, 
     submitting: any, 
-    handleSubmit: any
+    handleSubmit: any,
+    register: any,
+    errors: any
 }
 
 interface RecipeCardListProps {

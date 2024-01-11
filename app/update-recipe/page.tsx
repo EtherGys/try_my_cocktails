@@ -3,6 +3,8 @@ import React from 'react'
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from 'react';
 import UpdateForm from '@/components/UpdateForm';
+import { useForm, SubmitHandler } from "react-hook-form";
+
 
 export default function EditRecipe() {
     const searchParams = useSearchParams();
@@ -20,6 +22,11 @@ export default function EditRecipe() {
     })
     const ingredientsValues: string[] = [];
     const char: string = ',';
+    const { register, 
+        handleSubmit,
+        formState: { errors },
+    } = useForm<PostProps>();
+    
     
     useEffect(() => {
         const getRecipeDetails = async () => {
@@ -37,9 +44,9 @@ export default function EditRecipe() {
         }
         if (recipeId) getRecipeDetails();
     }, [recipeId])
-
-    const updatePost = async (e: any) => {
-        e.preventDefault();
+    
+    async function  updatePost() {
+        // e.preventDefault();
         setSubmitting(true);
         post.ingredients
         .filter((str: string) => str !== '')
@@ -86,7 +93,7 @@ export default function EditRecipe() {
             }
         }
     } else {
-
+        
         try {
             const response = await fetch(`/api/recipe/${recipeId}`, {
                 method: 'PATCH',
@@ -111,13 +118,18 @@ export default function EditRecipe() {
     }
 }
 
+const onSubmit: SubmitHandler<PostProps> = () => updatePost();
+
 return (
     <UpdateForm
     type="Modifier"
     post={post}
+    errors={errors}
+    register={register}
+    
     setPost={setPost}
     submitting={submitting}
-    handleSubmit={updatePost}
+    handleSubmit={handleSubmit(onSubmit)}
     />
     )
 }
