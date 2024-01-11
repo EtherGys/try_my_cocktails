@@ -3,7 +3,7 @@ import React from 'react'
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from 'react';
 import UpdateForm from '@/components/UpdateForm';
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 
 export default function EditRecipe() {
