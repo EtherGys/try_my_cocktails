@@ -73,7 +73,7 @@ export default function CreateRecipe() {
 const onSubmit: SubmitHandler<PostProps> = () => createPost();
 
 return (
-  <div>
+  <div className='mx-4 md:mx-0'>
   <Form
   type="Créer"
   post={post}

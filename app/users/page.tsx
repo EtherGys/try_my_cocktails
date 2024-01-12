@@ -35,14 +35,14 @@ export default function MyProfile() {
     
     return (
         <div>
-            <Profile
-            name={`Profil de ${user.username}`}
-            desc="Bienvenue sur ce profil"
-            data={posts}
-            />
-            </div>
-            )
-        }
-        
-        
-        
+        <Profile
+        name={`Profil de ${user.username}`}
+        desc="Bienvenue sur ce profil"
+        data={posts}
+        />
+        </div>
+        )
+    }
+    
+    
+    

@@ -121,15 +121,16 @@ export default function EditRecipe() {
 const onSubmit: SubmitHandler<PostProps> = () => updatePost();
 
 return (
+    <div className='mx-4 md:mx-0'>
     <UpdateForm
     type="Modifier"
     post={post}
     errors={errors}
     register={register}
-    
     setPost={setPost}
     submitting={submitting}
     handleSubmit={handleSubmit(onSubmit)}
     />
+    </div>
     )
 }

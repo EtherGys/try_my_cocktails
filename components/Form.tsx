@@ -170,7 +170,7 @@ export default function Form({type, post, setPost, submitting, handleSubmit, reg
                             </label>
                             
                             {/* Cover image */}
-                            <div className="w-[40%]">
+                            <div className="md:w-[40%]">
                             <label htmlFor="cover-photo" className="font-satoshi font-semibold text-base text-gray-700">Image de couverture</label>
                             <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                             <div className="text-center">

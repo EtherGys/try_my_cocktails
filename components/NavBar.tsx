@@ -62,7 +62,7 @@ export function NavBar() {
                         {toggleDropdown && (
                             <div className='dropdown'>
                             <Link href='/profile' className='dropdown_link' onClick={() => {setToggleDropdown(false)}}>
-                            Profil
+                            Mon profil
                             </Link>
                             <Link href='/create-recipe' className='dropdown_link' onClick={() => {setToggleDropdown(false)}}>
                             Ajouter un cocktail
